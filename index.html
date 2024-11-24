@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KimmySched</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap");
+
+      .start-btn {
+        background-color: #ff4081; /* Pink background color */
+        color: white; /* White text */
+        border: none;
+        padding: 20px 40px; /* Spacing inside the button */
+        border-radius: 15px; /* Rounded corners */
+        cursor: pointer;
+        font-size: 24px; /* Larger font size for visibility */
+        transition: transform 0.3s, box-shadow 0.3s ease; /* Smooth transition for click and shadow effects */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Light shadow for depth */
+        text-transform: uppercase; /* Uppercase text */
+        letter-spacing: 1px; /* Spacing between letters */
+
+        /* Center the button on the screen */
+        position: fixed; /* Fix position relative to the viewport */
+        top: 50%; /* Position vertically in the center */
+        left: 50%; /* Position horizontally in the center */
+        transform: translate(-50%, -50%); /* Adjust for perfect centering */
+        z-index: 9999; /* Ensure it's on top layer */
+      }
+
+      .start-btn:focus {
+        outline: none; /* Remove focus outline */
+      }
+
+      .start-btn:active {
+        transform: scale(0.98); /* Slightly shrink the button when clicked */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Reset shadow on click */
+      }
+
+      body {
+        background-image: url("background.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        font-family: "Patrick Hand", cursive;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .container {
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 800px;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+      }
+
+      h1 {
+        color: #ff4081;
+        font-size: 26px;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7); /* Change shadow to white */
+      }
+
+      .carousel {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .flashcard {
+        display: flex;
+        flex-direction: column-reverse; /* Position content towards the bottom */
+        justify-content: flex-start; /* Make sure content stays at the bottom */
+        align-items: center;
+        width: 100%;
+        height: 350px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        position: relative;
+        background-color: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        background-size: cover;
+        background-position: center;
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+      .flashcard h2 {
+        font-weight: bold;
+        font-size: 30px;
+        color: #fff;
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Shadow effect on the titles */
+      }
+
+      .radio-container {
+        display: flex;
+        justify-content: center; /* Center the radio buttons */
+        margin-bottom: 10px;
+        width: 100%;
+        position: absolute;
+        bottom: 90px; /* Adjust bottom position as needed */
+        text-align: center;
+      }
+
+      .radio-container label {
+        display: inline-block;
+        margin: 5px;
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        font-size: 18px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .radio-container label:hover {
+        transform: scale(1.1);
+      }
+
+      .suggestion-input {
+        width: 80%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        margin-top: 10px; /* Adjust margin to separate from radio buttons */
+        position: absolute;
+        bottom: 10px; /* Adjust bottom position to align the input field */
+        left: 50%; /* Center the input box horizontally */
+        transform: translateX(-50%); /* Adjust for exact centering */
+      }
+
+      .submit-btn {
+        background-color: #ff4081;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin: 5px;
+        transition: background-color 0.3s;
+        font-size: 16px;
+        margin-top: 20px;
+        display: none; /* Initially hidden */
+      }
+
+      .submit-btn:hover {
+        background-color: #f50057;
+      }
+
+      .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+
+      .nav-buttons button {
+        background-color: #ff4081;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+
+      .nav-buttons button:hover {
+        background-color: #f50057;
+      }
+
+      @media (max-width: 768px) {
+        .flashcard {
+          height: auto;
+          margin-bottom: 15px;
+        }
+
+        h1 {
+          font-size: 22px;
+        }
+
+        .flashcard h2 {
+          font-size: 20px;
+        }
+
+        .suggestion-input {
+          width: 90%;
+        }
+
+        .submit-btn {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Start Button -->
+    <button class="start-btn" id="startBtn">Start</button>
+    <!-- Main Content -->
+    <audio id="backgroundMusic" loop>
+      <source src="/song.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+
+    <div class="container">
+      <h1>Hi Kimmy! Wanna have a date?</h1>
+
+      <form id="dateForm">
+        <div class="carousel">
+          <!-- Location Flashcard -->
+          <div class="flashcard" style="background-image: url('location.png')">
+            <h2>Location</h2>
+            <div class="radio-container">
+              <label>
+                <input
+                  type="radio"
+                  name="location"
+                  value="Outside"
+                  onclick="selectOption('location', 'Outside')"
+                />
+                Outside
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="location"
+                  value="Inside"
+                  onclick="selectOption('location', 'Inside')"
+                />
+                Inside
+              </label>
+            </div>
+            <input
+              type="text"
+              class="suggestion-input"
+              id="locationInput"
+              placeholder="Have something in mind?"
+            />
+          </div>
+
+          <!-- Food Flashcard -->
+          <div class="flashcard" style="background-image: url('food.png')">
+            <h2>Food</h2>
+            <div class="radio-container">
+              <label>
+                <input
+                  type="radio"
+                  name="food"
+                  value="Snacks"
+                  onclick="selectOption('food', 'Snacks')"
+                />
+                Snacks
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="food"
+                  value="Meal"
+                  onclick="selectOption('food', 'Meal')"
+                />
+                Meal
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="food"
+                  value="Both"
+                  onclick="selectOption('food', 'Both')"
+                />
+                Both
+              </label>
+            </div>
+            <input
+              type="text"
+              class="suggestion-input"
+              id="foodInput"
+              placeholder="Have something in mind?"
+            />
+          </div>
+
+          <!-- Activity Flashcard -->
+          <div class="flashcard" style="background-image: url('activity.png')">
+            <h2>Activity</h2>
+            <div class="radio-container">
+              <label>
+                <input
+                  type="radio"
+                  name="activity"
+                  value="Movie"
+                  onclick="selectOption('activity', 'Movie')"
+                />
+                Movie
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="activity"
+                  value="Get Drunk"
+                  onclick="selectOption('activity', 'Get Drunk')"
+                />
+                Drinking Session
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="activity"
+                  value="Both"
+                  onclick="selectOption('activity', 'Both')"
+                />
+                Both
+              </label>
+            </div>
+            <input
+              type="text"
+              class="suggestion-input"
+              id="activityInput"
+              placeholder="Have something in mind?"
+            />
+          </div>
+
+          <!-- Suggestions Flashcard -->
+          <div
+            class="flashcard"
+            style="background-image: url('suggestions.png')"
+          >
+            <h2>When and Do you have something to add?</h2>
+            <input
+              type="text"
+              class="suggestion-input"
+              id="suggestionsInput"
+              name="suggestions"
+              placeholder="Any suggestions?"
+            />
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Done!</button>
+      </form>
+
+      <div class="nav-buttons">
+        <button id="prevBtn">Previous</button>
+        <button id="nextBtn">Next</button>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+      (function () {
+        emailjs.init("9cinN521QrPxodrXx"); // Replace with your EmailJS Public Key
+      })();
+      document.getElementById("startBtn").addEventListener("click", () => {
+        // Show content and play music
+        document.querySelector(".container").style.display = "block";
+        document.getElementById("backgroundMusic").play();
+        // Hide start button
+        document.getElementById("startBtn").style.display = "none";
+      });
+      $(document).ready(function () {
+        $(".carousel").slick({
+          infinite: false,
+          speed: 500,
+          fade: false,
+          cssEase: "ease",
+          arrows: false,
+          dots: false,
+          draggable: false,
+        });
+
+        $("#nextBtn").click(function () {
+          $(".carousel").slick("slickNext");
+          checkLastCard();
+        });
+
+        $("#prevBtn").click(function () {
+          $(".carousel").slick("slickPrev");
+          checkLastCard();
+        });
+
+        function checkLastCard() {
+          var currentIndex = $(".carousel").slick("slickCurrentSlide");
+          var totalSlides = $(".carousel").slick("getSlick").slideCount;
+
+          if (currentIndex === totalSlides - 1) {
+            $(".submit-btn").show();
+          } else {
+            $(".submit-btn").hide();
+          }
+        }
+
+        checkLastCard();
+
+        $("#dateForm").on("submit", function (e) {
+          e.preventDefault();
+
+          // Collect all input values
+          var locationInput = $("#locationInput").val();
+          var foodInput = $("#foodInput").val();
+          var activityInput = $("#activityInput").val();
+          var suggestionsInput = $("#suggestionsInput").val(); // Already holds input from the last flashcard
+
+          // Combine inputs with "|" separator
+          var allInputs =
+            locationInput +
+            " | " +
+            foodInput +
+            " | " +
+            activityInput +
+            " | " +
+            suggestionsInput;
+
+          // Set the combined value to the last suggestion input
+          $("#suggestionsInput").val(allInputs);
+
+          // Send form data via EmailJS
+          emailjs.sendForm("service_hnwpptg", "template_pkv0wth", this).then(
+            function (response) {
+              alert("Date details sent successfully!");
+
+              // Clear inputs and hide radio buttons and text fields
+              $("input[type='text']").val(""); // Clear all text inputs
+              $("input[type='radio']").prop("checked", false); // Uncheck all radio buttons
+              $(".suggestion-input").val(""); // Clear the suggestion input fields
+              $(".radio-container").hide(); // Hide all radio button containers
+              $(".submit-btn").hide(); // Hide the submit button
+            },
+            function (error) {
+              alert("Failed to send date details. Please try again.");
+            }
+          );
+        });
+      });
+    </script>
+  </body>
+</html>
