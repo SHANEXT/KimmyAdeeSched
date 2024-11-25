@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KimmySched</title>
+    <title>Date Planner</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
@@ -14,36 +14,6 @@
     />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap");
-
-      .start-btn {
-        background-color: #ff4081; /* Pink background color */
-        color: white; /* White text */
-        border: none;
-        padding: 20px 40px; /* Spacing inside the button */
-        border-radius: 15px; /* Rounded corners */
-        cursor: pointer;
-        font-size: 24px; /* Larger font size for visibility */
-        transition: transform 0.3s, box-shadow 0.3s ease; /* Smooth transition for click and shadow effects */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Light shadow for depth */
-        text-transform: uppercase; /* Uppercase text */
-        letter-spacing: 1px; /* Spacing between letters */
-
-        /* Center the button on the screen */
-        position: fixed; /* Fix position relative to the viewport */
-        top: 50%; /* Position vertically in the center */
-        left: 50%; /* Position horizontally in the center */
-        transform: translate(-50%, -50%); /* Adjust for perfect centering */
-        z-index: 9999; /* Ensure it's on top layer */
-      }
-
-      .start-btn:focus {
-        outline: none; /* Remove focus outline */
-      }
-
-      .start-btn:active {
-        transform: scale(0.98); /* Slightly shrink the button when clicked */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Reset shadow on click */
-      }
 
       body {
         background-image: url("background.png");
@@ -216,10 +186,7 @@
     </style>
   </head>
   <body>
-    <!-- Start Button -->
-    <button class="start-btn" id="startBtn">Start</button>
-    <!-- Main Content -->
-    <audio id="backgroundMusic" loop>
+    <audio autoplay loop>
       <source src="./song.mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
@@ -372,13 +339,7 @@
       (function () {
         emailjs.init("9cinN521QrPxodrXx"); // Replace with your EmailJS Public Key
       })();
-      document.getElementById("startBtn").addEventListener("click", () => {
-        // Show content and play music
-        document.querySelector(".container").style.display = "block";
-        document.getElementById("backgroundMusic").play();
-        // Hide start button
-        document.getElementById("startBtn").style.display = "none";
-      });
+
       $(document).ready(function () {
         $(".carousel").slick({
           infinite: false,
